@@ -6,6 +6,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
 } from "@remix-run/react";
 import styles from "./tailwind.css";
 import type { LinksFunction } from "@remix-run/node";
@@ -34,6 +35,43 @@ export const meta: MetaFunction = () => ({
   description: "find the best movie list around the world",
   viewport: "width=device-width,initial-scale=1",
 });
+
+export function ErrorBoundary({ error }) {
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        {/* add the UI you want your users to see */}
+        {error.message}
+        <Scripts />
+      </body>
+    </html>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  return (
+    <html>
+      <head>
+        <title>Oops!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <h1>
+          {caught.status} {caught.statusText}
+        </h1>
+        <Scripts />
+      </body>
+    </html>
+  );
+}
 
 export default function App() {
   return (

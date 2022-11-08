@@ -1,9 +1,13 @@
-import { LoaderFunction } from "@remix-run/node";
+import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 import { Film, getFilmsById } from "~/api/films";
 import CharacterList from "~/components/CharacterList";
 import FilmBanner from "~/components/FilmBanner";
+
+export const meta: MetaFunction = ({ data }) => {
+  return { title: data.title, description: data.description };
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   invariant(params.filmId, "Expected params.filmId");

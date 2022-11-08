@@ -1,8 +1,11 @@
 import { useCatch, useLoaderData } from "@remix-run/react";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction, Response } from "@remix-run/node";
 import invariant from "tiny-invariant";
 import { FilmCharacter, getFilmCharacter } from "~/api/films";
 
+export let meta: MetaFunction = ({ data }) => {
+  return { title: data.name };
+};
 export let loader: LoaderFunction = async ({ params }) => {
   invariant(params.characterId, "expected params.characterId");
 
@@ -36,11 +39,11 @@ export function CatchBoundary() {
     return (
       <div className="mb-3">
         <div className="text-3xl mb-2">Details</div>
-        <div className="p-4 rounded shadow-lg border bg-orange-200 border-orange-600">
-          <div className="text-gray-700 font-bold text-xl mb-2">
+        <div className="p-4 rounded shadow-lg border bg-rose-500 border-orange-600">
+          <div className="text-gray-100 font-bold text-xl mb-2">
             {caught.statusText}
           </div>
-          <p>
+          <p className="text-gray-300">
             {caught.status} {caught.statusText}
           </p>
         </div>
